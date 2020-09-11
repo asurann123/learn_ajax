@@ -19,6 +19,7 @@ function createHttpRequest(){
 }
 
 window.onload = function doAction(){
+
   var request = createHttpRequest();
   if (request == null) {
     alert("HttpRequestが取得できませんでした。");
@@ -30,8 +31,17 @@ window.onload = function doAction(){
   //request.setRequestHeader("User-Agent" , "XMLHttpRequest");
   request.onreadystatechange = function(){
     if (request.readyState == 4 && request.status == 200) {
+        anime({
+            targets: loading,
+            opacity: 0,
+            easing: 'easeInOutExpo'
+          });
 
-      callback(request,0);
+      //読み込んでいる風の処理
+      setTimeout(function(){
+        callback(request,0);
+      }, 1000);
+
     }else{
       //errorPrint(request)
     }
@@ -55,6 +65,9 @@ function Koshien(){
 function callback(request,mode){
   var obj = document.querySelector('ul');
   var xml_obj = request.responseXML;
+  var loading = document.getElementById("loading");
+  loading.style.display ="none";
+
   if (mode == 1) {
     var entry_lenght = xml_obj.getElementsByTagName("item").length;
     var html = '';
@@ -62,7 +75,7 @@ function callback(request,mode){
       var title_ele = xml_obj.getElementsByTagName("item")[i].getElementsByTagName("title").item(0);
       var summary = xml_obj.getElementsByTagName("item")[i].getElementsByTagName("description").item(0);
       var url = xml_obj.getElementsByTagName("item")[i].getElementsByTagName("link").item(0);
-      html +='<div class="card"><img class="bd-placeholder-img card-img-top" src="" alt=""><div class="card-body"><h5 class="card-title"><b>' + title_ele.textContent + '</b></h5><p class="card-text">' + summary.textContent + '</p><a href="' + url.textContent + '" class="btn btn-outline-info" target=”_blank”>詳しく</a></div></div><hr>'
+      html +='<div class="card"><img class="bd-placeholder-img card-img-top" src="" alt=""><div class="card-body"><h5 class="card-title"><b>' + title_ele.textContent + '</b></h5><p class="card-text">' + summary.textContent + '...</p><a href="' + url.textContent + '" class="btn btn-outline-info" target=”_blank”>詳しく</a></div></div><hr>'
     }
     obj.innerHTML = html;
   }else {
