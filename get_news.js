@@ -90,13 +90,13 @@ function callback(request,mode){
       var url = xml_obj.getElementsByTagName("entry")[i].getElementsByTagName("id").item(0);
       var img_link = xml_obj.getElementsByTagName("entry")[i].getElementsByTagName("link").item(1);
       if (img_link !== null) {
-        img_link = img_link.getAttribute('href');
+        var img_link = {title:title_ele.textContent, imglink:img_link.getAttribute('href'), pagelink:url.textContent};
         img_links_array.push(img_link);
       }
       html +='<div class="card"><img class="bd-placeholder-img card-img-top" src="" alt=""><div class="card-body"><h5 class="card-title"><b>' + title_ele.textContent + '</b></h5><p class="card-text">' + summary.textContent + '</p><a href="' + url.textContent + '" class="btn btn-outline-info" target=”_blank”>詳しく</a></div></div><hr>'
     }
-    top_imgs_html = '<div id="carouselExampleControls" class="carousel slide" data-ride="carousel"><div class="carousel-inner"><div class="carousel-item active"><img class="d-block w-100" src="' + img_links_array[0] + '" alt="First slide"></div><div class="carousel-item"><img class="d-block w-100" src="' + img_links_array[1] + '" alt="Second slide"></div><div class="carousel-item"><img class="d-block w-100" src="' + img_links_array[2] + '" alt="Third slide"></div>  </div><a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Next</span></a></div>';
-    top_imgs.innerHTML = top_imgs_html
+    top_imgs_html = '<div id="carouselExampleControls" class="carousel slide" data-ride="carousel"><div class="carousel-inner"><div class="carousel-item active"><a href="' + img_links_array[0]['pagelink'] + '"><img class="d-block w-100" src="' + img_links_array[0]['imglink'] + '" alt="First slide"></a></div><div class="carousel-item"><a href="' + img_links_array[1]['pagelink'] + '"><img class="d-block w-100" src="' + img_links_array[1]['imglink'] + '" alt="Second slide"></div><div class="carousel-item"><a href="' + img_links_array[2]['pagelink'] + '"><img class="d-block w-100" src="' + img_links_array[2]['imglink'] + '" alt="Third slide"></div>  </div><a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Next</span></a></div>';
+    top_imgs.innerHTML = top_imgs_html;
     main_contents.innerHTML = html;
   }
 
