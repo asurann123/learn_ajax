@@ -42,6 +42,7 @@ window.onload = function doAction(){
         callback(request,0);
       }, 1000);
 
+
     }else{
       //errorPrint(request)
     }
@@ -63,9 +64,11 @@ function Koshien(){
 
 //コールバック関数
 function callback(request,mode){
-  var obj = document.querySelector('ul');
+  var top_imgs = document.getElementById("top_imgs")
+  var main_contents = document.querySelector('ul');
   var xml_obj = request.responseXML;
   var loading = document.getElementById("loading");
+  let img_links_array = [];
   loading.style.display ="none";
 
   if (mode == 1) {
@@ -77,7 +80,7 @@ function callback(request,mode){
       var url = xml_obj.getElementsByTagName("item")[i].getElementsByTagName("link").item(0);
       html +='<div class="card"><img class="bd-placeholder-img card-img-top" src="" alt=""><div class="card-body"><h5 class="card-title"><b>' + title_ele.textContent + '</b></h5><p class="card-text">' + summary.textContent + '...</p><a href="' + url.textContent + '" class="btn btn-outline-info" target=”_blank”>詳しく</a></div></div><hr>'
     }
-    obj.innerHTML = html;
+    main_contents.innerHTML = html;
   }else {
     var entry_lenght = xml_obj.getElementsByTagName("entry").length;
     var html = '';
@@ -85,9 +88,16 @@ function callback(request,mode){
       var title_ele = xml_obj.getElementsByTagName("entry")[i].getElementsByTagName("title").item(0);
       var summary = xml_obj.getElementsByTagName("entry")[i].getElementsByTagName("summary").item(0);
       var url = xml_obj.getElementsByTagName("entry")[i].getElementsByTagName("id").item(0);
+      var img_link = xml_obj.getElementsByTagName("entry")[i].getElementsByTagName("link").item(1);
+      if (img_link !== null) {
+        img_link = img_link.getAttribute('href');
+        img_links_array.push(img_link);
+      }
       html +='<div class="card"><img class="bd-placeholder-img card-img-top" src="" alt=""><div class="card-body"><h5 class="card-title"><b>' + title_ele.textContent + '</b></h5><p class="card-text">' + summary.textContent + '</p><a href="' + url.textContent + '" class="btn btn-outline-info" target=”_blank”>詳しく</a></div></div><hr>'
     }
-    obj.innerHTML = html;
+    top_imgs_html = '<div id="carouselExampleControls" class="carousel slide" data-ride="carousel"><div class="carousel-inner"><div class="carousel-item active"><img class="d-block w-100" src="' + img_links_array[0] + '" alt="First slide"></div><div class="carousel-item"><img class="d-block w-100" src="' + img_links_array[1] + '" alt="Second slide"></div><div class="carousel-item"><img class="d-block w-100" src="' + img_links_array[2] + '" alt="Third slide"></div>  </div><a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Next</span></a></div>';
+    top_imgs.innerHTML = top_imgs_html
+    main_contents.innerHTML = html;
   }
 
 }
