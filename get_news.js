@@ -100,9 +100,8 @@ function callback(request,mode){
         var img_link_dict = {title:title_ele.textContent, imglink:img_link.getAttribute('href'), pagelink:url.textContent, summarycontent:summary.textContent};
         img_links_array.push(img_link_dict);
         img_link = img_link.getAttribute('href');
-        pre_main_content_html = '<div class="card"><img src="' + img_link + '" class="card-img-top" ><div class="card-body"><h5 class="card-title"><b>' + title_ele.textContent + '</b></h5><p class="card-text">' + summary.textContent + '</p><a href="' + url.textContent + '" class="btn btn-outline-info" target=”_blank">詳しく</a></div></div><br>';
+        pre_main_content_html = '<div class="card"><img src="' + img_link + '" class="card-img-top" width="30%" height="30%"><div class="card-body"><h5 class="card-title"><b>' + title_ele.textContent + '</b></h5><p class="card-text">' + summary.textContent + '</p><a href="' + url.textContent + '" class="btn btn-outline-info" target=”_blank">詳しく</a></div></div><br>';
       }else{
-        img_link = 'Noimg.jpg';
         pre_main_content_html +='<div class="card"><img class="bd-placeholder-img card-img-top" src="" alt=""><div class="card-body"><h5 class="card-title"><b>' + title_ele.textContent + '</b></h5><p class="card-text">' + summary.textContent + '</p><a href="' + url.textContent + '" class="btn btn-outline-info" target=”_blank”>詳しく</a></div></div><hr>'
       }
       html += pre_main_content_html
@@ -110,10 +109,9 @@ function callback(request,mode){
 
     //トップのカルーセルを生成(3枚以上集まらないと表示しない)
     if (img_links_array.length >= 3) {
-      top_imgs_html = '<div id="carouselExampleControls" class="carousel slide" data-ride="carousel"><div class="carousel-inner"><div class="carousel-item active"><a href="' + img_links_array[0]['pagelink'] + '"><img class="d-block w-100" src="' + img_links_array[0]['imglink'] + '" alt="First slide"></a></div><div class="carousel-item"><a href="' + img_links_array[1]['pagelink'] + '"><img class="d-block w-100" src="' + img_links_array[1]['imglink'] + '" alt="Second slide"></div><div class="carousel-item"><a href="' + img_links_array[2]['pagelink'] + '"><img class="d-block w-100" src="' + img_links_array[2]['imglink'] + '" alt="Second slide"></div>';
+      top_imgs_html = '<br><div id="carouselExampleControls" class="carousel slide" data-ride="carousel"><div class="carousel-inner"><div class="carousel-item active"><a href="' + img_links_array[0]['pagelink'] + '"><img class="d-block w-100" src="' + img_links_array[0]['imglink'] + '" alt="First slide"></a></div><div class="carousel-item"><a href="' + img_links_array[1]['pagelink'] + '"><img class="d-block w-100" src="' + img_links_array[1]['imglink'] + '" alt="Second slide"><></div><div class="carousel-item"><a href="' + img_links_array[2]['pagelink'] + '"><img class="d-block w-100" src="' + img_links_array[2]['imglink'] + '" alt="Second slide"></a></div>';
       top_imgs.innerHTML = top_imgs_html;
     }
-
     main_contents.innerHTML = html;
   }
 
