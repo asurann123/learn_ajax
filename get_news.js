@@ -5,9 +5,12 @@ window.onload = function doAction(){
     alert("HttpRequestが取得できませんでした。");
     return;
   }
-  alert("更新しますか？");
-  alert("本当にしますか？");
-  request.open("GET","get_baseball_news.php",true);
+
+  let result = confirm("更新しますか？");
+
+  if (result) {
+    request.open("GET","get_baseball_news.php",true);
+  }
 
   request.onreadystatechange = function(){
     if (request.readyState == 4 && request.status == 200) {
