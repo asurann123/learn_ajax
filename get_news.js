@@ -81,26 +81,39 @@ function callback(request,mode){
       html +='<div class="card"><img class="bd-placeholder-img card-img-top" src="" alt=""><div class="card-body"><h5 class="card-title"><b>' + title_ele.textContent + '</b></h5><p class="card-text">' + summary.textContent + '...</p><a href="' + url.textContent + '" class="btn btn-outline-info" target=”_blank”>詳しく</a></div></div><hr>'
     }
     main_contents.innerHTML = html;
+
   }else {
     var entry_lenght = xml_obj.getElementsByTagName("entry").length;
     var html = '';
+
     for (var i = 0; i < entry_lenght; i++) {
+
+      //取得したXMLの処理
+      var pre_main_content_html = '';
       var title_ele = xml_obj.getElementsByTagName("entry")[i].getElementsByTagName("title").item(0);
       var summary = xml_obj.getElementsByTagName("entry")[i].getElementsByTagName("summary").item(0);
       var url = xml_obj.getElementsByTagName("entry")[i].getElementsByTagName("id").item(0);
       var img_link = xml_obj.getElementsByTagName("entry")[i].getElementsByTagName("link").item(1);
+
+      //写真がついている記事は画像を表示できるカードで表示する
       if (img_link !== null) {
         var img_link_dict = {title:title_ele.textContent, imglink:img_link.getAttribute('href'), pagelink:url.textContent, summarycontent:summary.textContent};
         img_links_array.push(img_link_dict);
-        //1枚ずつカードを作成する
-        html +='<div class="card"><img class="bd-placeholder-img card-img-top" src="" alt=""><div class="card-body"><h5 class="card-title"><b>' + img_link_dict['title'] + '</b></h5><p class="card-text">' + img_link_dict['summarycontent'] + '</p><a href="' + img_link_dict['pagelink'] + '" class="btn btn-outline-info" target=”_blank”>詳しく</a></div></div><hr>'
+        img_link = img_link.getAttribute('href');
+        pre_main_content_html = '<div class="card"><img src="' + img_link + '" class="card-img-top" ><div class="card-body"><h5 class="card-title"><b>' + title_ele.textContent + '</b></h5><p class="card-text">' + summary.textContent + '</p><a href="' + url.textContent + '" class="btn btn-outline-info" target=”_blank">詳しく</a></div></div><br>';
+      }else{
+        img_link = 'Noimg.jpg';
+        pre_main_content_html +='<div class="card"><img class="bd-placeholder-img card-img-top" src="" alt=""><div class="card-body"><h5 class="card-title"><b>' + title_ele.textContent + '</b></h5><p class="card-text">' + summary.textContent + '</p><a href="' + url.textContent + '" class="btn btn-outline-info" target=”_blank”>詳しく</a></div></div><hr>'
+      }
+      html += pre_main_content_html
       }
 
+    //トップのカルーセルを生成(3枚以上集まらないと表示しない)
+    if (img_links_array.length >= 3) {
+      top_imgs_html = '<div id="carouselExampleControls" class="carousel slide" data-ride="carousel"><div class="carousel-inner"><div class="carousel-item active"><a href="' + img_links_array[0]['pagelink'] + '"><img class="d-block w-100" src="' + img_links_array[0]['imglink'] + '" alt="First slide"></a></div><div class="carousel-item"><a href="' + img_links_array[1]['pagelink'] + '"><img class="d-block w-100" src="' + img_links_array[1]['imglink'] + '" alt="Second slide"></div><div class="carousel-item"><a href="' + img_links_array[2]['pagelink'] + '"><img class="d-block w-100" src="' + img_links_array[2]['imglink'] + '" alt="Second slide"></div>';
+      top_imgs.innerHTML = top_imgs_html;
     }
 
-    //トップのカルーセルを生成
-    top_imgs_html = '<div id="carouselExampleControls" class="carousel slide" data-ride="carousel"><div class="carousel-inner"><div class="carousel-item active"><a href="' + img_links_array[0]['pagelink'] + '"><img class="d-block w-100" style="height: 15rem;" src="' + img_links_array[0]['imglink'] + '" alt="First slide"></a></div><div class="carousel-item"><a href="' + img_links_array[1]['pagelink'] + '"><img class="d-block w-100" style="height: 15rem;" src="' + img_links_array[1]['imglink'] + '" alt="Second slide"></div><div class="carousel-item"><a href="' + img_links_array[2]['pagelink'] + '"><img class="d-block w-100" style="height: 15rem;" src="' + img_links_array[2]['imglink'] + '" alt="Third slide"></div>  </div><a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="sr-only">Previous</span></a><a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="sr-only">Next</span></a></div>';
-    top_imgs.innerHTML = top_imgs_html;
     main_contents.innerHTML = html;
   }
 
