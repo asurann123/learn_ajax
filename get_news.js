@@ -87,9 +87,9 @@ function callback(request,mode){
         var img_link_dict = {title:title_ele.textContent, imglink:img_link.getAttribute('href'), pagelink:url.textContent, summarycontent:summary.textContent};
         img_links_array.push(img_link_dict);
         img_link = img_link.getAttribute('href');
-        pre_main_content_html = '<br><div class="card"><img src="' + img_link + '" class="card-img-top" width="30%" height="30%"><div class="card-body"><h5 class="card-title"><b>' + title_ele.textContent + '</b></h5><p class="card-text">' + summary.textContent + '</p><a href="' + url.textContent + '" class="btn btn-outline-info" target=”_blank">詳しく</a></div></div>';
+        pre_main_content_html = '<div class="card"><img src="' + img_link + '" class="card-img-top" width="30%" height="30%"><div class="card-body"><h5 class="card-title"><b>' + title_ele.textContent + '</b></h5><p class="card-text">' + summary.textContent + '</p><a href="' + url.textContent + '" class="btn btn-outline-info" target=”_blank">詳しく</a></div></div><br>';
       }else{
-        pre_main_content_html +='<br><div class="card"><img class="bd-placeholder-img card-img-top" src="" alt=""><div class="card-body"><h5 class="card-title"><b>' + title_ele.textContent + '</b></h5><p class="card-text">' + summary.textContent + '</p><a href="' + url.textContent + '" class="btn btn-outline-info" target=”_blank”>詳しく</a></div></div>'
+        pre_main_content_html +='<div class="card"><img class="bd-placeholder-img card-img-top" src="" alt=""><div class="card-body"><h5 class="card-title"><b>' + title_ele.textContent + '</b></h5><p class="card-text">' + summary.textContent + '</p><a href="' + url.textContent + '" class="btn btn-outline-info" target=”_blank”>詳しく</a></div></div><br>';
       }
       html += pre_main_content_html
       }
