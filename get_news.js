@@ -69,8 +69,11 @@ function callback(request,mode){
   var xml_obj = request.responseXML;
   var loading = document.getElementById("loading");
   let img_links_array = [];
+
+  //ローディング画面を消す
   loading.style.display ="none";
 
+  //甲子園の場合のXML処理
   if (mode == 1) {
     var entry_lenght = xml_obj.getElementsByTagName("item").length;
     var html = '';
@@ -82,6 +85,7 @@ function callback(request,mode){
     }
     main_contents.innerHTML = html;
 
+  //普通の画面の場合のXML処理
   }else {
     var entry_lenght = xml_obj.getElementsByTagName("entry").length;
     var html = '';
